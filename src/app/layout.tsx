@@ -29,7 +29,7 @@ export default function RootLayout({
       style={{ "--vsc-domain": "localhost" } as React.CSSProperties}
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
         <FlyonuiScript />

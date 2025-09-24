@@ -23,6 +23,16 @@
   }
 }
 
+@layer components {
+  .title {
+    @apply text-2xl font-bold text-center;
+  }
+
+  .container {
+    @apply max-w-2xl w-9/10 m-auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

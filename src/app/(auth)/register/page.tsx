@@ -8,6 +8,9 @@ import * as Yup from "yup";
 const validationSchema = Yup.object({
   email: Yup.string().email("Email inválido").required("O email é obrigatório"),
   password: Yup.string().required("A senha é obrigatória"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "As senhas devem ser iguais")
+    .required("Confirme a senha"),
 });
 
 type FormValues = Yup.InferType<typeof validationSchema>;
@@ -17,17 +20,17 @@ const handleSubmit = (values: FormValues) => {
   // aqui você pode chamar sua API de login
 };
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="flex flex-col min-h-screen justify-center items-center">
       <div className="max-w-sm w-full">
         <HeaderReturn />
         <div className="card shadow-2xl bg-base-100 pb-6">
           <div className="card-body">
-            <h2 className="title">Login</h2>
+            <h2 className="title">Registro</h2>
 
             <Formik
-              initialValues={{ email: "", password: "" }}
+              initialValues={{ email: "", password: "", confirmPassword: "" }}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
             >
@@ -45,13 +48,19 @@ export default function LoginPage() {
                     placeholder="••••••••"
                     type="password"
                   />
+                  <DivField
+                    label="Confirma Senha"
+                    name="confirmPassword"
+                    placeholder="••••••••"
+                    type="password"
+                  />
                   <div className="form-control mt-2">
                     <button
                       type="submit"
                       className="btn btn-primary"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Entrando..." : "Entrar"}
+                      {isSubmitting ? "Criando..." : "Registrar"}
                     </button>
                   </div>
                 </Form>
@@ -61,9 +70,9 @@ export default function LoginPage() {
 
           <div className="text-center mt-2">
             <p className="text-sm">
-              Não tem conta?{" "}
+              Já possui uma conta?{" "}
               <a href="/register" className="link link-primary">
-                Cadastre-se
+                Faça Login
               </a>
             </p>
           </div>

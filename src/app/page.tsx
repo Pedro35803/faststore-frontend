@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-1 gap-4 flex-col items-center">
+    <div className="flex flex-1 gap-4 flex-col items-center h-screen justify-center">
       <section className="max-w-3xl w-full text-center space-y-6 items-center">
         {/* Logo / Nome da Loja */}
         <h1 className="text-5xl font-bold text-primary">FastStore</h1>
