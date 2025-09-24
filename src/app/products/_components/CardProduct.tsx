@@ -2,7 +2,7 @@ import { Product } from "@/types/product";
 
 export const CardProduct = (product: Product) => {
   return (
-    <div className="card sm:max-w-sm">
+    <div className="card sm:max-w-sm" key={product.id}>
       <figure>
         <img
           src={product.imageUrl}
