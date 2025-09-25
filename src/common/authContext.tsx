@@ -2,9 +2,15 @@
 
 import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
-import { api } from "../api";
+import { api, updateToken } from "../api";
 import { User } from "../types/user";
 import { ChildrenProps } from "@/types/common";
+import { LoadingPage } from "./LoadingPage";
+
+type LoginProps = {
+  email: string;
+  password: string;
+};
 
 type AuthContext = {
   user?: User;
@@ -12,22 +18,23 @@ type AuthContext = {
   isLogged: boolean;
   isLoading: boolean;
   logout: () => Promise<void>;
-  login: (email: string, password: string) => Promise<User>;
+  login: (props: LoginProps) => Promise<User>;
 };
 
 const authContext = createContext({} as AuthContext);
+
+const tokenKey = "token";
 
 export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const login = async (email: string, password: string): Promise<User> => {
-    const res = await api.post("/auth/login", { email, password });
+  const login = async ({ email, password }: LoginProps): Promise<User> => {
+    const res = await api.post("/login", { email, password });
     if (res.status !== 201) throw { message: res.data, status: res.status };
     const { user, token } = res.data;
     setUser(user);
-    Cookies.set("token", token);
-    api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    updateToken(`Bearer ${token}`);
     return res.data;
   };
 
@@ -42,14 +49,14 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   };
 
   const setTokenFromCookies = () => {
-    const token = Cookies.get("token");
+    const token = Cookies.get(tokenKey);
     if (token) {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      updateToken(`Bearer ${token}`);
     }
   };
 
   const logout = async () => {
-    Cookies.set("token", "");
+    Cookies.set(tokenKey, "");
     setUser(undefined);
   };
 
@@ -60,6 +67,8 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     setTokenFromCookies();
     getUser();
   }, []);
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <authContext.Provider

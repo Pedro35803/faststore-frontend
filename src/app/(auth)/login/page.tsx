@@ -1,8 +1,10 @@
 "use client";
 
+import { useAuth } from "@/common/authContext";
 import { DivField } from "@/common/DivField";
 import { HeaderReturn } from "@/common/header/HeaderReturn";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -12,12 +14,15 @@ const validationSchema = Yup.object({
 
 type FormValues = Yup.InferType<typeof validationSchema>;
 
-const handleSubmit = (values: FormValues) => {
-  console.log(values);
-  // aqui você pode chamar sua API de login
-};
-
 export default function LoginPage() {
+  const { login } = useAuth();
+  const router = useRouter();
+
+  const handleSubmit = async (values: FormValues) => {
+    await login(values);
+    router.push("/products");
+  };
+
   return (
     <div className="flex flex-col min-h-screen justify-center items-center">
       <div className="max-w-sm w-full">

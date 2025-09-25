@@ -27,7 +27,7 @@ export const DropdownProduct = () => {
         aria-labelledby="dropdown-nav"
       >
         <ItemLinkDropdown name="Meus Produtos" />
-        <ItemLinkDropdown name="Registrar Produtos" />
+        <ItemLinkDropdown name="Registrar Produtos" link="/products/register" />
         <hr className="border-base-content/25 -mx-2" />
         <ItemLinkDropdown name="Todos Produtos" />
       </ul>
