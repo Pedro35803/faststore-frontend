@@ -14,3 +14,7 @@ export const productSchema = Yup.object().shape({
     .url("URL inválida")
     .required("A URL da imagem é obrigatória"),
 });
+
+export const productFileSchema = Yup.object().shape({
+  fileCSV: Yup.string().required("O arquivo é obrigatório"),
+})
