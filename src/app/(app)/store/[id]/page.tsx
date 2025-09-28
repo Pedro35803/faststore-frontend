@@ -3,16 +3,22 @@
 import { CardProduct } from "../../products/_components/CardProduct";
 import { CardHeaderStore } from "../_components/CardHeaderStore";
 
-import { useResource } from "@/common/useResource";
 import { Seller } from "@/types/user";
+import { Loading } from "@/common/Loading";
 import { useAuth } from "@/common/authContext";
+import { useResourceClient } from "@/common/useResourceClient";
 
 import { usePathname } from "next/navigation";
 
-export default async function StorePage() {
-  const { id } = usePathname();
+export default function StorePageId() {
+  const pathname = usePathname(); // retorna "/store/5"
+  const id = pathname.split("/").pop();
+
+  const store = useResourceClient<Seller>(`/stores/${id}`);
   const { user } = useAuth();
-  const store = await useResource<Seller>(`/stores/${id}`);
+
+  if (!store) return <Loading />;
+
   return (
     <>
       <CardHeaderStore {...store} isOwner={store.id === user?.id} />

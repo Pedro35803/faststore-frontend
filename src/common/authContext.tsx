@@ -5,6 +5,7 @@ import { api, updateToken } from "../api";
 import { User } from "../types/user";
 import { ChildrenProps } from "@/types/common";
 import { LoadingPage } from "./LoadingPage";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 
 type LoginProps = {
   email: string;
@@ -22,9 +23,11 @@ type AuthContext = {
 
 const authContext = createContext({} as AuthContext);
 
+const keyToken = "nextauth.token";
+const seconds_in_hour = 3600;
+
 export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<User>();
-  const [token, setToken] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
 
   const login = async ({ email, password }: LoginProps): Promise<User> => {
@@ -33,7 +36,8 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
 
     const { user, token } = res.data;
 
-    updateToken(`Bearer ${token}`);
+    setCookie(undefined, keyToken, token, { maxAge: seconds_in_hour });
+    updateToken(token);
 
     setUser(user);
     return user;
@@ -51,11 +55,14 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   };
 
   const setTokenFromCookies = () => {
-    if (token) updateToken(`Bearer ${token}`);
+    const { [keyToken]: token } = parseCookies();
+    if (token) {
+      updateToken(token);
+    }
   };
 
   const logout = async () => {
-    setToken(undefined);
+    destroyCookie(undefined, keyToken);
     setUser(undefined);
   };
 

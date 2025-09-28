@@ -1,9 +1,9 @@
-import { BiLoaderAlt } from "react-icons/bi";
+import { Loading } from "./Loading";
 
 export const LoadingPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-      <BiLoaderAlt className="animate-spin text-6xl text-blue-500 mb-4" />
+      <Loading />
       <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Carregando...
       </h1>

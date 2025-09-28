@@ -31,6 +31,10 @@
   .container {
     @apply max-w-2xl w-9/10 m-auto;
   }
+
+  .grid-common {
+    @apply grid grid-cols-3 gap-3;
+  }
 }
 
 body {

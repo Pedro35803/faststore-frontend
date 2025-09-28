@@ -5,4 +5,4 @@ export const api = axios.create({
 });
 
 export const updateToken = (value: string) =>
-  (api.defaults.headers.common.Authorization = value);
+  (api.defaults.headers.common.Authorization = `Bearer ${value}`);

@@ -23,7 +23,11 @@ export const Menu = () => {
             <ItemLink name="Home" link="/" />
 
             {type == "SELLER" && <ItemLink name="Dashboard" />}
-            {type == "CLIENT" && <ItemLink name="Carrinho" />}
+            {type == "CLIENT" && <ItemLink name="Carrinho" link="/cart" />}
+            {type == "CLIENT" && (
+              <ItemLink name="Favoritos" link="/favorites" />
+            )}
+            <ItemLink name="Lojas" link="/store" />
 
             <DropdownProduct />
           </ul>

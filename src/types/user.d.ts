@@ -3,12 +3,13 @@ import { Product } from "./product";
 export type UserRole = "CLIENT" | "SELLER";
 
 export interface User {
-  id: string;               // identificador único
-  name: string;             // nome do usuário
-  email: string;            // e-mail único
-  role: UserRole;           // CLIENT ou SELLER
-  createdAt: Date;          // data de criação da conta
-  updatedAt?: Date;         // última atualização
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  picture?: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 // Tipos auxiliares
@@ -25,24 +26,22 @@ export interface Purchase {
 }
 
 export interface Client extends User {
-  favorites?: string[];           // ids de produtos favoritados
-  cart?: CartItem[];              // carrinho de compras
-  purchaseHistory?: Purchase[];   // histórico de compras
+  favorites?: string[];
+  cart?: CartItem[];
+  purchaseHistory?: Purchase[];
 }
-
 
 export interface Seller extends User {
   storeName?: string;
-  bio?: string;
-  avatarUrl?: string;
+  description?: string;
 
   // Controle de conta
   isActive: boolean;
   lastLoginAt?: string;
-  
+
   // Relacionamentos
   productIds?: ProductId[]; // lista de ids dos produtos do vendedor (útil p/ listagens leves)
-  products?: Product[];     // quando for carregar junto
+  products?: Product[]; // quando for carregar junto
 
   // Dados de verificação / KYC simples
   documentNumber?: string; // CPF/CNPJ (se necessário)

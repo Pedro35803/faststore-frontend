@@ -19,7 +19,9 @@ export const CardStore = ({ id, avatarUrl, name, bio }: Seller) => {
         <h2 className="card-title">{name}</h2>
         <p className="text-sm text-gray-500">{bio}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary btn-sm">Ver produtos</button>
+          <a className="btn btn-primary btn-sm" href={`/store/${id}`}>
+            Ver produtos
+          </a>
         </div>
       </div>
     </div>

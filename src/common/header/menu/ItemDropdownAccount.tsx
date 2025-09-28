@@ -1,8 +1,20 @@
 "use client";
 
-import { MdAccountCircle } from "react-icons/md";
+import { useAuth } from "@/common/authContext";
+import {
+  MdAccountCircle,
+  MdHistory,
+  MdManageAccounts,
+  MdSettings,
+} from "react-icons/md";
+
+const trlRole = {
+  SELLER: "Vendedor",
+  CLIENT: "Client",
+};
 
 export const HeaderAccount = () => {
+  const { user } = useAuth();
   return (
     <div className="dropdown relative inline-flex [--auto-close:inside] [--offset:8] [--placement:bottom-end]">
       <button
@@ -33,21 +45,29 @@ export const HeaderAccount = () => {
           </div>
           <div>
             <h6 className="text-base-content text-base font-semibold">
-              Usuário Logado
+              {user?.name}
             </h6>
-            <small className="text-base-content/50">Cliente</small>
+            <small className="text-base-content/50">
+              {trlRole[user?.role] || ""}
+            </small>
           </div>
         </li>
         <li>
-          <a className="dropdown-item" href="/profile">
-            <span className="icon-[tabler--user]"></span>
+          <a className="dropdown-item" href="/account">
+            <MdManageAccounts size={24} />
             Meu Perfil
           </a>
         </li>
         <li>
           <a className="dropdown-item" href="/settings">
-            <span className="icon-[tabler--settings]"></span>
+            <MdSettings size={24} />
             Configurações
+          </a>
+        </li>
+        <li>
+          <a className="dropdown-item" href="/historic">
+            <MdHistory size={24} />
+            Histórico de Compras
           </a>
         </li>
         <li className="dropdown-footer gap-2">
