@@ -5,7 +5,7 @@ import { ItemLink, ItemLinkDropdown } from "./ItemMenu";
 import { useAuth } from "@/common/authContext";
 
 export const DropdownProduct = () => {
-  const { type } = useAuth();
+  const { type, user } = useAuth();
   if (type != "SELLER") return <ItemLink name="Produtos" />;
   return (
     <li className="dropdown relative inline-flex [--auto-close:inside] [--offset:9] [--placement:bottom-end]">
@@ -26,10 +26,10 @@ export const DropdownProduct = () => {
         aria-orientation="vertical"
         aria-labelledby="dropdown-nav"
       >
-        <ItemLinkDropdown name="Meus Produtos" />
+        <ItemLinkDropdown name="Meus Produtos" link={`/store/${user?.id}`} />
         <ItemLinkDropdown name="Registrar Produtos" link="/products/register" />
         <hr className="border-base-content/25 -mx-2" />
-        <ItemLinkDropdown name="Todos Produtos" />
+        <ItemLinkDropdown name="Todos Produtos" link="/products" />
       </ul>
     </li>
   );

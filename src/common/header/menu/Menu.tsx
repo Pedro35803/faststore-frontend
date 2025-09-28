@@ -24,6 +24,7 @@ export const Menu = () => {
 
             {type == "SELLER" && <ItemLink name="Dashboard" />}
             {type == "CLIENT" && <ItemLink name="Carrinho" />}
+
             <DropdownProduct />
           </ul>
         </div>

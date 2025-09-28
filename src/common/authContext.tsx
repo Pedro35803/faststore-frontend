@@ -1,6 +1,5 @@
 "use client";
 
-import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 import { api, updateToken } from "../api";
 import { User } from "../types/user";
@@ -23,40 +22,40 @@ type AuthContext = {
 
 const authContext = createContext({} as AuthContext);
 
-const tokenKey = "token";
-
 export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<User>();
+  const [token, setToken] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
 
   const login = async ({ email, password }: LoginProps): Promise<User> => {
     const res = await api.post("/login", { email, password });
     if (res.status !== 201) throw { message: res.data, status: res.status };
+
     const { user, token } = res.data;
-    setUser(user);
+
     updateToken(`Bearer ${token}`);
-    return res.data;
+
+    setUser(user);
+    return user;
   };
 
   const getUser = async () => {
     try {
-      const res = await api.get<User | undefined>("/users/me");
+      const res = await api.get<User>("/users/me");
       setUser(res.data);
     } catch {
       setUser(undefined);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const setTokenFromCookies = () => {
-    const token = Cookies.get(tokenKey);
-    if (token) {
-      updateToken(`Bearer ${token}`);
-    }
+    if (token) updateToken(`Bearer ${token}`);
   };
 
   const logout = async () => {
-    Cookies.set(tokenKey, "");
+    setToken(undefined);
     setUser(undefined);
   };
 
