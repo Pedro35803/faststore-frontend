@@ -9,8 +9,8 @@ type Props = {
 
 export const DivField = ({ name, label, ...rest }: Props) => {
   return (
-    <div className="form-control">
-      <label className="label">
+    <div className="form-control w-full">
+      <label className="label w-full">
         <p className="label-text">{label}</p>
         <Field
           name={name}

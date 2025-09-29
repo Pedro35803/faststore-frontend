@@ -1,8 +1,10 @@
 "use client";
 
+import { useAuth } from "@/common/authContext";
 import Link from "next/link";
 
 export default function HomePage() {
+  const { isLogged, type } = useAuth();
   return (
     <div className="flex flex-1 gap-4 flex-col items-center h-screen justify-center">
       <section className="max-w-3xl w-full text-center space-y-6 items-center">
@@ -15,15 +17,38 @@ export default function HomePage() {
 
         {/* Botões principais */}
         <div className="flex flex-wrap justify-center gap-4 mt-6">
-          <Link href="/login" className="btn btn-primary">
-            Entrar
-          </Link>
-          <Link href="/register" className="btn btn-outline">
-            Criar conta
-          </Link>
+          {!isLogged ? (
+            <>
+              <Link href="/login" className="btn btn-primary">
+                Entrar
+              </Link>
+              <Link href="/register" className="btn btn-outline">
+                Criar conta
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/account" className="btn btn-outline">
+                Editar Conta
+              </Link>
+            </>
+          )}
           <Link href="/products" className="btn btn-secondary">
             Ver produtos
           </Link>
+          <Link href="/store" className="btn btn-secondary">
+            Ver Lojas
+          </Link>
+          {type === "CLIENT" && (
+            <>
+              <Link href="/cart/me" className="btn btn-warning">
+                Ver Carrinho
+              </Link>
+              <Link href="/favorites/me" className="btn btn-warning">
+                Ver Favoritos
+              </Link>
+            </>
+          )}
         </div>
       </section>
 

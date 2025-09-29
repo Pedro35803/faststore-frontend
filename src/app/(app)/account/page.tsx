@@ -51,7 +51,7 @@ export default function AccountPage() {
           onSubmit={submit}
         >
           {() => (
-            <Form className="flex flex-col flex-1 gap-4 w-full max-w-lg">
+            <Form className="flex flex-col flex-1 items-center gap-4 w-full max-w-lg">
               <ImgPerfil />
               {user?.role === "CLIENT" && (
                 <LevelAccount level={user?.accountLevel} />
