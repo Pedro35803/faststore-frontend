@@ -1,4 +1,4 @@
-import { translateGlobal } from "@/constants/Translate";
+import { translateGlobal } from "@/constants/translate";
 import * as yup from "yup";
 
 const trl = translateGlobal.pt.scheme.address;

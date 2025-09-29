@@ -4,10 +4,11 @@ import { useAuth } from "@/common/authContext";
 import { DivField } from "@/common/DivField";
 import { Form, Formik } from "formik";
 import { LevelAccount } from "./_components/LevelAccount";
-import { AccountFormValues, userSchema } from "@/scheme/user";
-import { BiPencil } from "react-icons/bi";
+import { AccountFormValues, sellerSchema, userSchema } from "@/scheme/user";
 import { AxiosError, AxiosResponse } from "axios";
 import { api } from "@/api";
+import { ButtonRequest } from "@/common/ButtonRequest";
+import { ImgPerfil } from "./_components/ImgPerfil";
 
 const createObjFile = (url: string = "") => {
   const filename = url.split("/").pop();
@@ -42,28 +43,28 @@ export default function AccountPage() {
 
   return (
     <div className="items-center flex-1">
-      <div className="w-full max-w-md gap-6 flex flex-1 flex-col items-center">
+      <div className="w-full gap-6 flex flex-1 flex-col items-center">
         <h2 className="title">Editar Conta</h2>
-        <LevelAccount level="initial" />
         <Formik
           initialValues={{ ...user, picture: createObjFile(user?.picture) }}
-          validationSchema={userSchema}
+          validationSchema={user?.role === "CLIENT" ? userSchema : sellerSchema}
           onSubmit={submit}
         >
-          {({ isSubmitting }) => (
-            <Form className="flex flex-col flex-1 gap-4">
+          {() => (
+            <Form className="flex flex-col flex-1 gap-4 w-full max-w-lg">
+              <ImgPerfil />
+              {user?.role === "CLIENT" && (
+                <LevelAccount level={user?.accountLevel} />
+              )}
               <DivField label="Email" name="email" type="email" disabled />
               <DivField label="Nome" name="name" />
-              <DivField label="Nome" name="name" />
-              <div className="form-control mt-2">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Criando..." : "Registrar"}
-                </button>
-              </div>
+              {user?.role === "SELLER" && (
+                <>
+                  <DivField name="cnpj" label="Seu CNPJ" />
+                  <DivField name="phone" label="Seu Telefone" />
+                </>
+              )}
+              <ButtonRequest>Salvar</ButtonRequest>
             </Form>
           )}
         </Formik>

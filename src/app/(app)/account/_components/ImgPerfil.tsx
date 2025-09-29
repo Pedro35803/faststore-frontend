@@ -1,9 +1,13 @@
 "use client";
 
+import { useAuth } from "@/common/authContext";
+import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
+import { UserRoleBadge } from "./userRoleBadge";
 
 export const ImgPerfil = () => {
   const [imageSrc, setImageSrc] = useState();
+  const { setValues } = useFormikContext();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -13,7 +17,7 @@ export const ImgPerfil = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const listFiles = event.target.files as FileList;
     const fileSelect = listFiles[0];
-    setValue("picture", fileSelect);
+    setValues("picture", fileSelect);
     convert2base64(fileSelect);
   };
 
@@ -27,9 +31,10 @@ export const ImgPerfil = () => {
 
   return (
     <div className="gap-2 items-center">
-      <label {...register("picture")}>
+      <label>
         <input
           type="file"
+          name="picture"
           className="h-0 w-0 opacity-0"
           onChange={handleFileChange}
         />
@@ -39,7 +44,7 @@ export const ImgPerfil = () => {
           className="rounded-full w-24 aspect-square bg-black/10 cursor-pointer"
         />
       </label>
-      <UserRoleBadge role={user.role} />
+      <UserRoleBadge role={user?.role} />
     </div>
   );
 };

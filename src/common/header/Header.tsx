@@ -10,7 +10,7 @@ export const Header = () => {
           className="link text-base-content link-neutral text-xl font-bold no-underline"
           href="/"
         >
-          Loja Online
+          FastStore
         </a>
       </div>
       <Menu />

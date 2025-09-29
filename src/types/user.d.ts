@@ -7,7 +7,7 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
-  picture?: string;
+  picture: string;
   createdAt: Date;
   updatedAt?: Date;
 }
@@ -26,6 +26,7 @@ export interface Purchase {
 }
 
 export interface Client extends User {
+  accountLevel: "initial" | "silver" | "gold";
   favorites?: string[];
   cart?: CartItem[];
   purchaseHistory?: Purchase[];
@@ -35,16 +36,12 @@ export interface Seller extends User {
   storeName?: string;
   description?: string;
 
-  // Controle de conta
-  isActive: boolean;
-  lastLoginAt?: string;
-
   // Relacionamentos
   productIds?: ProductId[]; // lista de ids dos produtos do vendedor (útil p/ listagens leves)
   products?: Product[]; // quando for carregar junto
 
   // Dados de verificação / KYC simples
-  documentNumber?: string; // CPF/CNPJ (se necessário)
+  cpfCnpj?: string; // CPF/CNPJ (se necessário)
   address?: {
     street?: string;
     city?: string;
