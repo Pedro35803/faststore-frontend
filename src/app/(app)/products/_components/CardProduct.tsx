@@ -26,7 +26,7 @@ export const CardProduct = ({
 
   const toggleCard = async () => {
     try {
-      if (isCart) await api.post("/cart/me", { id_product: product.id });
+      if (!isCart) await api.post("/cart/me", { id_product: product.id });
       else await api.delete("/cart/" + product.id);
     } catch (error) {
       console.error(error);
@@ -94,11 +94,13 @@ export const CardProduct = ({
           alt="Imagem do Produto"
           className="h-50 w-full object-cover"
         />
-        <StarFavorite
-          initial={isFavorite}
-          className="absolute top-0 right-0"
-          onChange={toggleFavorites}
-        />
+        {user?.role === "CLIENT" && (
+          <StarFavorite
+            initial={isFavorite}
+            className="absolute top-0 right-0"
+            onChange={toggleFavorites}
+          />
+        )}
       </figure>
       <div className="card-body">
         <span className="flex justify-between items-center gap-2">
