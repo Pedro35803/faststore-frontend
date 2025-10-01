@@ -24,7 +24,6 @@ export const userSchema = Yup.object({
 export type AccountFormValues = Yup.InferType<typeof userSchema>;
 
 const sellerTrl = translateGlobal.pt.scheme.seller;
-const phoneTrl = translateGlobal.pt.scheme.phoneBrl;
 const cnpjTrl = translateGlobal.pt.scheme.cnpj;
 
 export const sellerSchema = userSchema.concat(

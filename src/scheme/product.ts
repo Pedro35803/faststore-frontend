@@ -16,7 +16,18 @@ export const productSchema = Yup.object().shape({
 });
 
 export const productFileSchema = Yup.object().shape({
-  fileCSV: Yup.string().required(product.fileCSV.required),
+  fileCSV: Yup.mixed()
+    .required(product.fileCSV.required) // obrigatoriedade
+    // .test(
+    //   "fileType",
+    //   "Somente arquivos CSV são permitidos",
+    //   (value) => value && value.type === "text/csv"
+    // )
+    // .test(
+    //   "fileSize",
+    //   "Arquivo muito grande",
+    //   (value) => value && value.size <= 5 * 1024 * 1024 // 5MB
+    // ),
 });
 
 export type ProductFormValues = Yup.InferType<typeof productSchema>;

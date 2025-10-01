@@ -6,6 +6,7 @@ import { BuyButton } from "./_components/ButtonBuyAll";
 type Cart = {
   product: Product;
   quantity: number;
+  id: string;
 };
 
 type Response = {
@@ -26,7 +27,8 @@ export default async function CartPage() {
       <div className="grid-common">
         {carts?.cart.map((item) => (
           <CardProduct
-            key={item.id}
+            key={item?.id}
+            isFavorite={false}
             quantity={item.quantity}
             {...item.product}
           />

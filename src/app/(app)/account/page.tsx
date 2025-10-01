@@ -5,14 +5,15 @@ import { DivField } from "@/common/DivField";
 import { Form, Formik } from "formik";
 import { LevelAccount } from "./_components/LevelAccount";
 import { AccountFormValues, sellerSchema, userSchema } from "@/scheme/user";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { api } from "@/api";
 import { ButtonRequest } from "@/common/ButtonRequest";
 import { ImgPerfil } from "./_components/ImgPerfil";
 import { useRouter } from "next/navigation";
+import { Client, User } from "@/types/user";
 
 const createObjFile = (url: string = "") => {
-  const filename = url.split("/").pop();
+  const filename = url.split("/").pop() as string;
   const extension = filename.split(".").pop();
   const file = new File([url], filename, { type: `image/${extension}` });
   return file;
@@ -59,7 +60,7 @@ export default function AccountPage() {
             <Form className="flex flex-col flex-1 items-center gap-4 w-full max-w-2xl">
               <ImgPerfil />
               {user?.role === "CLIENT" && (
-                <LevelAccount level={user?.accountLevel} />
+                <LevelAccount level={(user as Client)?.accountLevel} />
               )}
               <div className="flex gap-4 w-full">
                 <div className="w-full">

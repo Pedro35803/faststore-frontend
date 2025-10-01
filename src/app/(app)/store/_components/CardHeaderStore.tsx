@@ -12,7 +12,6 @@ export const CardHeaderStore = ({
   store_name,
   role,
   user,
-  cnpj,
   isOwner,
 }: Props) => {
   const [editing, setEditing] = useState(false);

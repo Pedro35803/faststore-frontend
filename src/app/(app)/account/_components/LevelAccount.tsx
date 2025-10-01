@@ -1,12 +1,11 @@
 "use client";
 
+import { Client } from "@/types/user";
 import React from "react";
 import { MdEmojiEvents } from "react-icons/md"; // ícone de medalha
 
-type AccountLevel = "initial" | "silver" | "gold";
-
 interface LevelAccountProps {
-  level: AccountLevel;
+  level: Client["accountLevel"];
 }
 
 const trlLabel = {
@@ -21,7 +20,9 @@ const styleLevel = {
   initial: "bg-blue-200 text-blue-800",
 };
 
-export const LevelAccount: React.FC<LevelAccountProps> = ({ level }) => {
+export const LevelAccount: React.FC<LevelAccountProps> = ({
+  level,
+}: LevelAccountProps) => {
   const style = styleLevel[level] || styleLevel.initial;
 
   return (

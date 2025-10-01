@@ -1,7 +1,7 @@
 "use client";
 
 import { Formik, Form, ErrorMessage, useFormikContext } from "formik";
-import { productFileSchema } from "@/scheme/product";
+import { ProductFileFormValues, productFileSchema } from "@/scheme/product";
 import { InputFile } from "@/common/inputFile";
 import {
   inputRadioStyle,
@@ -37,8 +37,8 @@ const InputFileCSV = () => {
 };
 
 export const FormCsvFileRegisterProducts = () => {
-  const listHeaderUserCsv = useRef<String[]>(null);
-  const updateOrder = (item: String[]) => (listHeaderUserCsv.current = item);
+  const listHeaderUserCsv = useRef<string[]>(null);
+  const updateOrder = (item: string[]) => (listHeaderUserCsv.current = item);
   const router = useRouter();
 
   const renderModalMapCSV = (list: string[], fileCSV) => {
@@ -100,9 +100,9 @@ export const FormCsvFileRegisterProducts = () => {
       <Formik
         initialValues={{ fileCsv: "" }}
         validationSchema={productFileSchema}
-        onSubmit={async (values) => {
+        onSubmit={async (values: ProductFileFormValues) => {
           const csvData = values.fileCSV;
-          const headers = await getCsvHeaders(csvData);
+          const headers = await getCsvHeaders(csvData as File);
           renderModalMapCSV(headers, csvData);
         }}
       >
