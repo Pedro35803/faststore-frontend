@@ -9,7 +9,7 @@ type CartResponse = {
   total_price: number;
 };
 
-export default function BuyButton({ total_price }: CartResponse) {
+export const BuyButton = ({ total_price }: CartResponse) => {
   const router = useRouter();
 
   const openModalBuy = async () => {
@@ -51,4 +51,4 @@ export default function BuyButton({ total_price }: CartResponse) {
       {`Comprar Tudo ${coinPtBr(total_price)}`}
     </button>
   );
-}
+};

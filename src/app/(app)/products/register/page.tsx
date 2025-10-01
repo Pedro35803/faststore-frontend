@@ -7,6 +7,7 @@ import { convertObjForFormData } from "@/services/formData";
 import { api } from "@/api";
 import { useState } from "react";
 import { useAuth } from "@/common/authContext";
+import Swal from "sweetalert2";
 
 type OptionsTab = "forms" | "file";
 const stlHandleForm = "rounded-field text-base-content z-10 h-8 w-1/2";
@@ -16,18 +17,17 @@ export default function CreateProductPage() {
   const router = useRouter();
   const { user, isLogged } = useAuth();
 
-  const handleSubmit = async (values: any) => {
-    const data = values.fileCSV ? convertObjForFormData(values) : values;
-    const res = await api.post("/products", data);
+  const handleSubmitFormManual = async (values: any) => {
+    const res = await api.post("/products", values);
     if (res.status === 201) {
-      alert("Produto criado com sucesso!");
+      Swal.fire("Produto registrado com sucesso!", "", "success");
       router.push("/products");
     }
   };
 
   if (isLogged && user?.status !== "ACTIVE") router.push("/account");
 
-  const props = { handleSubmit };
+  const propsForm = { handleSubmit: handleSubmitFormManual };
 
   return (
     <div className="max-w-5xl flex-1 mx-auto p-6 space-y-6 min-h-screen">
@@ -50,15 +50,15 @@ export default function CreateProductPage() {
       </div>
 
       <div className="hidden md:flex flex-1 justify-between gap-4">
-        <FormManualRegisterProducts {...props} />
-        <FormCsvFileRegisterProducts {...props} />
+        <FormManualRegisterProducts {...propsForm} />
+        <FormCsvFileRegisterProducts />
       </div>
 
       <div className="flex flex-1 md:hidden justify-center">
         {activeTab === "forms" ? (
-          <FormManualRegisterProducts {...props} />
+          <FormManualRegisterProducts {...propsForm} />
         ) : (
-          <FormCsvFileRegisterProducts {...props} />
+          <FormCsvFileRegisterProducts />
         )}
       </div>
     </div>

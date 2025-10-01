@@ -8,7 +8,7 @@ export const ButtonRequest = ({ children }: ChildrenProps) => {
       <button
         type="submit"
         onClick={() => handleSubmit}
-        className="btn btn-primary"
+        className="btn btn-primary w-full"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Enviando..." : children}

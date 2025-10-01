@@ -1,7 +1,7 @@
 import { apiGet } from "@/services/serverGetReqApi";
 import { CardProduct } from "../products/_components/CardProduct";
 import { Product } from "@/types/product";
-import BuyButton from "./_components/ButtonBuyAll";
+import { BuyButton } from "./_components/ButtonBuyAll";
 
 type Cart = {
   product: Product;
