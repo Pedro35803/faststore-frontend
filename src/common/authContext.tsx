@@ -3,14 +3,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api, updateToken } from "../api";
 import { User } from "../types/user";
-import { ChildrenProps } from "@/types/common";
+import { ChildrenProps, LoginProps } from "@/types/common";
 import { LoadingPage } from "./LoadingPage";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
-
-type LoginProps = {
-  email: string;
-  password: string;
-};
 
 type AuthContext = {
   user?: User;

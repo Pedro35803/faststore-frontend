@@ -4,7 +4,8 @@ import { useAuth } from "@/common/authContext";
 import { ButtonRequest } from "@/common/ButtonRequest";
 import { DivField } from "@/common/DivField";
 import { HeaderReturn } from "@/common/header/HeaderReturn";
-import { LoginFormValues, loginSchema } from "@/scheme/auth";
+import { loginSchema } from "@/scheme/auth";
+import { LoginProps } from "@/types/common";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 
@@ -12,8 +13,8 @@ export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (values: LoginFormValues) => {
-    await login(values);
+  const handleSubmit = async (values: LoginProps) => {
+    await login(values as LoginProps);
     router.push("/products");
   };
 

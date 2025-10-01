@@ -7,7 +7,6 @@ import {
   TbCircle,
   TbGripVertical,
   TbListDetails,
-  TbSquare,
 } from "react-icons/tb";
 
 type Props = {
@@ -15,9 +14,9 @@ type Props = {
   onChangeOrder: (newOrder: string[]) => void;
 };
 
-const getListOrder = (el: any) => {
+const getListOrder = (el: HTMLElement) => {
   return Array.from(el.querySelectorAll("li")).map(
-    (li) => li.getAttribute("data-id") || ""
+    (li) => (li as HTMLLIElement).getAttribute("data-id") || ""
   );
 };
 

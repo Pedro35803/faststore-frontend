@@ -7,3 +7,8 @@ export type ChildrenProps = {
 export type DivFormProps = {
   handleSubmit: (values: object) => void
 }
+
+export type LoginProps = {
+  email: string;
+  password: string;
+};

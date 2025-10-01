@@ -8,13 +8,14 @@ import { HeaderReturn } from "@/common/header/HeaderReturn";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { SelectRole } from "./_components/SelectRole";
-import { RegisterFormValues, registerSchema } from "@/scheme/auth";
+import { registerSchema } from "@/scheme/auth";
+import { LoginProps } from "@/types/common";
 
 export default function RegisterPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (values: RegisterFormValues) => {
+  const handleSubmit = async (values: LoginProps) => {
     const register = await api.post("/register", values);
     if (register.status === 201) {
       await login(values);

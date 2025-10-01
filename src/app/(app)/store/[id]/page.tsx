@@ -24,7 +24,7 @@ export default function StorePageId() {
       <CardHeaderStore {...store} isOwner={store.id === user?.id} />
       <div className="grid-common">
         {store.product?.map((props) => (
-          <CardProduct key={props.id} {...props} />
+          <CardProduct key={props.id} isFavorite={false} quantity={0} {...props} />
         ))}
       </div>
     </>

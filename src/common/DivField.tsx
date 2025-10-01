@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 type InputProps = React.ComponentPropsWithRef<"input">;
 
-type Props = { label: string } & InputProps;
+type Props = { label: string; as?: string } & InputProps;
 
 export const DivField = ({
   name,
