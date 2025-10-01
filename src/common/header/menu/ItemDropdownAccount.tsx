@@ -27,7 +27,15 @@ export const HeaderAccount = () => {
       >
         <div className="avatar">
           <div className="size-9.5 rounded-full">
-            <MdAccountCircle size={40} />
+            {user?.picture ? (
+              <img
+                src={user.picture}
+                alt="imagem de perfil"
+                className="size-10"
+              />
+            ) : (
+              <MdAccountCircle size={40} />
+            )}
           </div>
         </div>
       </button>
@@ -40,7 +48,15 @@ export const HeaderAccount = () => {
         <li className="dropdown-header gap-2">
           <div className="avatar">
             <div className="w-10 rounded-full">
-              <MdAccountCircle size={36} />
+              {user?.picture ? (
+                <img
+                  src={user.picture}
+                  alt="imagem de perfil"
+                  className="size-10"
+                />
+              ) : (
+                <MdAccountCircle size={36} />
+              )}
             </div>
           </div>
           <div>
@@ -64,12 +80,22 @@ export const HeaderAccount = () => {
             Configurações
           </a>
         </li>
-        <li>
-          <a className="dropdown-item" href="/historic">
-            <MdHistory size={24} />
-            Histórico de Compras
-          </a>
-        </li>
+        {user?.role === "CLIENT" && (
+          <li>
+            <a className="dropdown-item" href="/historic">
+              <MdHistory size={24} />
+              Histórico de Compras
+            </a>
+          </li>
+        )}
+        {user?.role === "SELLER" && (
+          <li>
+            <a className="dropdown-item" href="/dashboard">
+              <MdHistory size={24} />
+              Dashboard
+            </a>
+          </li>
+        )}
         <li className="dropdown-footer gap-2">
           <a className="btn btn-error btn-soft btn-block" href="/logout">
             <span className="icon-[tabler--logout]"></span>

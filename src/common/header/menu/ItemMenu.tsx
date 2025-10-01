@@ -12,8 +12,8 @@ export const ItemLink = ({ name, link = "#" }: Props) => {
 
 export const ItemLinkDropdown = ({ name, link = "#" }: Props) => {
   return (
-    <li className="dropdown-item">
-      <a href={link}>{name}</a>
+    <li className="dropdown-item p-0">
+      <a className="w-full block p-4" href={link}>{name}</a>
     </li>
   );
 };

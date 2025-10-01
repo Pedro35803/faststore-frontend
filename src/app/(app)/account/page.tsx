@@ -9,6 +9,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { api } from "@/api";
 import { ButtonRequest } from "@/common/ButtonRequest";
 import { ImgPerfil } from "./_components/ImgPerfil";
+import { useRouter } from "next/navigation";
 
 const createObjFile = (url: string = "") => {
   const filename = url.split("/").pop();
@@ -19,14 +20,12 @@ const createObjFile = (url: string = "") => {
 
 export default function AccountPage() {
   const { user } = useAuth();
+  const router = useRouter();
 
-  async function submit(fields: AccountFormValues) {
+  const submit = async (fields: AccountFormValues) => {
     try {
-      const formData = new FormData();
-      Object.entries(fields).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-      await api.patch(`/users/${user?.id}`, formData);
+      await api.patch(`/user/me`, fields);
+      router.push("/products");
       // openModal();
     } catch (err) {
       const error = err as AxiosError;
@@ -39,31 +38,40 @@ export default function AccountPage() {
       //   }
       // }
     }
-  }
+  };
 
   return (
     <div className="items-center flex-1">
-      <div className="w-full gap-6 flex flex-1 flex-col items-center">
+      <div className="w-full gap-1 flex flex-1 flex-col items-center">
         <h2 className="title">Editar Conta</h2>
         <Formik
-          initialValues={{ ...user, picture: createObjFile(user?.picture) }}
+          initialValues={{
+            ...user,
+            ...user?.seller,
+            picture: createObjFile(user?.picture),
+          }}
           validationSchema={user?.role === "CLIENT" ? userSchema : sellerSchema}
           onSubmit={submit}
         >
-          {() => (
-            <Form className="flex flex-col flex-1 items-center gap-4 w-full max-w-lg">
+          {({ errors }) => (
+            <Form className="flex flex-col flex-1 items-center gap-4 w-full max-w-2xl">
               <ImgPerfil />
               {user?.role === "CLIENT" && (
                 <LevelAccount level={user?.accountLevel} />
               )}
-              <DivField label="Email" name="email" type="email" disabled />
-              <DivField label="Nome" name="name" />
-              {user?.role === "SELLER" && (
-                <>
-                  <DivField name="cnpj" label="Seu CNPJ" />
-                  <DivField name="phone" label="Seu Telefone" />
-                </>
-              )}
+              <div className="flex gap-4 w-full">
+                <div className="w-full">
+                  <DivField label="Email" name="email" type="email" disabled />
+                  <DivField label="Nome" name="name" />
+                </div>
+                {user?.role === "SELLER" && (
+                  <div className="w-full">
+                    <DivField name="cnpj" label="Seu CNPJ" />
+                    <DivField name="store_name" label="Nome da Loja" />
+                    <DivField name="description" label="Descrição da Loja" />
+                  </div>
+                )}
+              </div>
               <ButtonRequest>Salvar</ButtonRequest>
             </Form>
           )}

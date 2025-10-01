@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
 
   const getUser = async () => {
     try {
-      const res = await api.get<User>("/users/me");
+      const res = await api.get<User>("/user/me");
       setUser(res.data);
     } catch {
       setUser(undefined);

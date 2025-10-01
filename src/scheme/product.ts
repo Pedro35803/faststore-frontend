@@ -1,27 +1,22 @@
 import * as Yup from "yup";
 import { translateGlobal } from "@/constants/translate";
 
+const { product } = translateGlobal.pt.scheme;
+
 export const productSchema = Yup.object().shape({
-  name: Yup.string().required(translateGlobal.pt.scheme.product.name.required),
+  name: Yup.string().required(product.name.required),
   price: Yup.number()
-    .typeError(translateGlobal.pt.scheme.product.price.typeError)
-    .positive(translateGlobal.pt.scheme.product.price.positive)
-    .required(translateGlobal.pt.scheme.product.price.required),
-  description: Yup.string().required(
-    translateGlobal.pt.scheme.product.description.required
-  ),
-  publishDate: Yup.date()
-    .typeError(translateGlobal.pt.scheme.product.publishDate.typeError)
-    .required(translateGlobal.pt.scheme.product.publishDate.required),
-  imageUrl: Yup.string()
-    .url(translateGlobal.pt.scheme.product.imageUrl.url)
-    .required(translateGlobal.pt.scheme.product.imageUrl.required),
+    .typeError(product.price.typeError)
+    .positive(product.price.positive)
+    .required(product.price.required),
+  description: Yup.string().required(product.description.required),
+  picture: Yup.string()
+    .url(product.imageUrl.url)
+    .required(product.imageUrl.required),
 });
 
 export const productFileSchema = Yup.object().shape({
-  fileCSV: Yup.string().required(
-    translateGlobal.pt.scheme.product.fileCSV.required
-  ),
+  fileCSV: Yup.string().required(product.fileCSV.required),
 });
 
 export type ProductFormValues = Yup.InferType<typeof productSchema>;

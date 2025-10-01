@@ -3,7 +3,12 @@
 import { Formik, Form } from "formik";
 import { DivField } from "@/common/DivField";
 import { productSchema } from "@/scheme/product";
-import { inputRadioStyle, labelStyle, nameRadioShare, objIdRadio } from "./util";
+import {
+  inputRadioStyle,
+  labelStyle,
+  nameRadioShare,
+  objIdRadio,
+} from "./util";
 import { ButtonSend } from "./ButtonSend";
 import { DivFormProps } from "@/types/common";
 
@@ -26,8 +31,7 @@ export const FormManualRegisterProducts = ({ handleSubmit }: DivFormProps) => {
           name: "",
           price: "",
           description: "",
-          publishDate: "",
-          imageUrl: "",
+          picture: "",
         }}
         validationSchema={productSchema}
         onSubmit={handleSubmit}
@@ -36,13 +40,13 @@ export const FormManualRegisterProducts = ({ handleSubmit }: DivFormProps) => {
           <Form className="flex flex-col gap-4">
             <DivField label="Nome" name="name" />
             <DivField label="Preço" name="price" type="number" />
-            <DivField label="Descrição" name="description" type="textarea" />
             <DivField
-              label="Data de Publicação"
-              name="publishDate"
-              type="date"
+              label="Descrição"
+              name="description"
+              className="h-20 p-2 resize-none"
+              as="textarea"
             />
-            <DivField label="URL da Imagem" name="imageUrl" type="url" />
+            <DivField label="URL da Imagem" name="picture" type="url" />
             <ButtonSend />
           </Form>
         )}

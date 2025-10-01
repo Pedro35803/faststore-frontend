@@ -1,11 +1,15 @@
-import { useResource } from "@/common/useResource";
 import { Product } from "@/types/product";
 import { CardProduct } from "./_components/CardProduct";
-import { Header } from "@/common/header/Header";
+import { api } from "@/api";
 
 export default async function ProductPage() {
-  const products = await useResource<Product[]>("/products?limit=40");
+  const response = await api.get<Product[]>("/products?limit=40");
+  const products  = response.data;
   return (
-    <div className="grid grid-cols-3 gap-3">{products.map(CardProduct)}</div>
+    <div className="grid-common">
+      {products.map((item) => (
+        <CardProduct key={item.id} {...item} />
+      ))}
+    </div>
   );
 }

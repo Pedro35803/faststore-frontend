@@ -30,7 +30,7 @@ export const ImgPerfil = () => {
   };
 
   return (
-    <div className="gap-2 items-center">
+    <div className="flex flex-col gap-2 items-center">
       <label>
         <input
           type="file"

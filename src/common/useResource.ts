@@ -1,6 +1,19 @@
-import { api } from "@/api";
+"use client";
 
-export const useResource = async <T>(url: string) => {
-  const response = await api.get<T>(url);
-  return response.data;
+import { useEffect, useState } from "react";
+import { api } from "../api";
+
+export const useResource = <T>(path: string, list: string[] = []) => {
+  const [resource, setResource] = useState<T>();
+
+  async function getResource() {
+    const res = await api.get<T>(path);
+    setResource(res.data);
+  }
+
+  useEffect(() => {
+    getResource();
+  }, list);
+
+  return resource;
 };

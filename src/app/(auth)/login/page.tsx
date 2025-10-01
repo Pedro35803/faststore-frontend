@@ -1,24 +1,18 @@
 "use client";
 
 import { useAuth } from "@/common/authContext";
+import { ButtonRequest } from "@/common/ButtonRequest";
 import { DivField } from "@/common/DivField";
 import { HeaderReturn } from "@/common/header/HeaderReturn";
+import { LoginFormValues, loginSchema } from "@/scheme/auth";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
-import * as Yup from "yup";
-
-const validationSchema = Yup.object({
-  email: Yup.string().email("Email inválido").required("O email é obrigatório"),
-  password: Yup.string().required("A senha é obrigatória"),
-});
-
-type FormValues = Yup.InferType<typeof validationSchema>;
 
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (values: FormValues) => {
+  const handleSubmit = async (values: LoginFormValues) => {
     await login(values);
     router.push("/products");
   };
@@ -33,10 +27,10 @@ export default function LoginPage() {
 
             <Formik
               initialValues={{ email: "", password: "" }}
-              validationSchema={validationSchema}
+              validationSchema={loginSchema}
               onSubmit={handleSubmit}
             >
-              {({ isSubmitting }) => (
+              {() => (
                 <Form className="flex flex-col gap-4">
                   <DivField
                     label="Email"
@@ -50,15 +44,7 @@ export default function LoginPage() {
                     placeholder="••••••••"
                     type="password"
                   />
-                  <div className="form-control mt-2">
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Entrando..." : "Entrar"}
-                    </button>
-                  </div>
+                  <ButtonRequest>Entrar</ButtonRequest>
                 </Form>
               )}
             </Formik>

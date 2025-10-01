@@ -6,6 +6,7 @@ import { FormCsvFileRegisterProducts } from "./_components/FormCsvFileRegisterPr
 import { convertObjForFormData } from "@/services/formData";
 import { api } from "@/api";
 import { useState } from "react";
+import { useAuth } from "@/common/authContext";
 
 type OptionsTab = "forms" | "file";
 const stlHandleForm = "rounded-field text-base-content z-10 h-8 w-1/2";
@@ -13,20 +14,23 @@ const stlHandleForm = "rounded-field text-base-content z-10 h-8 w-1/2";
 export default function CreateProductPage() {
   const [activeTab, setActiveTab] = useState<OptionsTab>("forms");
   const router = useRouter();
+  const { user, isLogged } = useAuth();
 
   const handleSubmit = async (values: any) => {
-    const formData = convertObjForFormData(values);
-    const res = await api.post("/products", formData);
+    const data = values.fileCSV ? convertObjForFormData(values) : values;
+    const res = await api.post("/products", data);
     if (res.status === 201) {
       alert("Produto criado com sucesso!");
       router.push("/products");
     }
   };
 
+  if (isLogged && user?.status !== "ACTIVE") router.push("/account");
+
   const props = { handleSubmit };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6 min-h-screen">
+    <div className="max-w-5xl flex-1 mx-auto p-6 space-y-6 min-h-screen">
       <h1 className="title">Criar Produto</h1>
 
       <div className="relative flex gap-2 w-full md:hidden">

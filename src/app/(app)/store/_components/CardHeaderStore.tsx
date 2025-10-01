@@ -8,10 +8,11 @@ interface Props extends Seller {
 }
 
 export const CardHeaderStore = ({
-  name,
   description,
-  picture,
+  store_name,
   role,
+  user,
+  cnpj,
   isOwner,
 }: Props) => {
   const [editing, setEditing] = useState(false);
@@ -20,8 +21,8 @@ export const CardHeaderStore = ({
     <div className="card min-w-full flex-row p-4 max-w-lg shadow-xl bg-base-100">
       <figure>
         <img
-          alt={name}
-          src={picture}
+          alt={store_name}
+          src={user?.picture}
           className="w-60 h-full object-cover rounded-2xl"
         />
       </figure>
@@ -31,7 +32,7 @@ export const CardHeaderStore = ({
           <div className="space-y-3">
             <input
               type="text"
-              defaultValue={name}
+              defaultValue={store_name}
               className="input input-bordered w-full"
             />
             <textarea
@@ -48,7 +49,7 @@ export const CardHeaderStore = ({
           </div>
         ) : (
           <>
-            <h2 className="text-2xl font-bold">{name}</h2>
+            <h2 className="text-2xl font-bold">{store_name}</h2>
             <p className="text-base text-gray-600">{description}</p>
           </>
         )}

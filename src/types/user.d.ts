@@ -2,27 +2,27 @@ import { Product } from "./product";
 
 export type UserRole = "CLIENT" | "SELLER";
 
-export interface User {
+export type CommonInResponse = {
+  created_at: string;
+  updated_at: string;
+};
+
+type UserStatus = "ACTIVE" | "INCOMPLETE" | "SUSPENDED" | "DELETED";
+
+export interface User extends CommonInResponse {
   id: string;
   name: string;
   email: string;
   role: UserRole;
+  status: UserStatus;
   picture: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  seller?: Seller;
 }
 
 // Tipos auxiliares
-export interface CartItem {
+export interface CartItem extends CommonInResponse {
   productId: string;
   quantity: number;
-}
-
-export interface Purchase {
-  id: string;
-  products: CartItem[];
-  total: number;
-  purchasedAt: Date;
 }
 
 export interface Client extends User {
@@ -33,15 +33,17 @@ export interface Client extends User {
 }
 
 export interface Seller extends User {
-  storeName?: string;
+  id_user: string;
+  store_name?: string;
   description?: string;
+  store_active: boolean;
 
   // Relacionamentos
-  productIds?: ProductId[]; // lista de ids dos produtos do vendedor (útil p/ listagens leves)
-  products?: Product[]; // quando for carregar junto
+  user?: User;
+  product?: Product[];
 
   // Dados de verificação / KYC simples
-  cpfCnpj?: string; // CPF/CNPJ (se necessário)
+  cnpj: string;
   address?: {
     street?: string;
     city?: string;

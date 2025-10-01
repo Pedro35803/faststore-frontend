@@ -28,7 +28,7 @@ export const LevelAccount: React.FC<LevelAccountProps> = ({ level }) => {
     <div className="flex flex-col items-center p-4 bg-primary rounded-lg shadow-md w-full max-w-xs">
       <MdEmojiEvents className="text-4xl mb-2 text-yellow-500" />
 
-      <h2 className="text-lg font-semibold mb-2">Account Level</h2>
+      <h2 className="text-lg font-semibold mb-2">Level da Conta</h2>
 
       <span className={`px-4 py-2 rounded-full font-medium ${style}`}>
         {trlLabel[level]}

@@ -4,7 +4,7 @@ export interface Product {
   price: number; // preço em formato numérico
   description: string; // descrição do produto
   publishedAt: Date; // data de publicação
-  imageUrl: string; // URL da imagem
+  picture: string; // URL da imagem
 
   // Campos opcionais que podem ser úteis
   stock?: number; // quantidade disponível

@@ -29,16 +29,12 @@ const cnpjTrl = translateGlobal.pt.scheme.cnpj;
 
 export const sellerSchema = userSchema.concat(
   Yup.object({
-    storeName: Yup.string().required(sellerTrl.storeName.required),
+    store_name: Yup.string().required(sellerTrl.storeName.required),
     description: Yup.string().required(sellerTrl.description.required),
     cnpj: Yup.string()
       .required(cnpjTrl.required)
       .transform((value) => value.replace(/\D/g, ""))
       .matches(/^\d{14}$/, cnpjTrl.incorrectSize),
-    phone: Yup.string()
-      .required(phoneTrl.required)
-      .transform((value) => value.replace(/\D/g, ""))
-      .matches(/^(\d{10,15})$/, phoneTrl.incorrectSize),
   })
 );
 
