@@ -1,14 +1,15 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { updateToken } from "./api";
+import { getCookieAuth } from "./services/cookiesServer";
 
 export function middleware(request: NextRequest) {
-  // Exemplo: bloquear acesso se não estiver autenticado
-  const token = request.cookies.get("token")?.value;
-
-  if (!token && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!getCookieAuth())
     return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  // Continua normalmente
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/account", "/dashboard", "/cart", "/favorites", "/history"],
+};

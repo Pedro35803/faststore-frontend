@@ -6,7 +6,7 @@ import { useAuth } from "@/common/authContext";
 
 export const DropdownProduct = () => {
   const { type, user } = useAuth();
-  if (type != "SELLER") return <ItemLink name="Produtos" />;
+  if (type != "SELLER") return <ItemLink name="Produtos" link="/products" />;
   return (
     <li className="dropdown relative inline-flex [--auto-close:inside] [--offset:9] [--placement:bottom-end]">
       <button

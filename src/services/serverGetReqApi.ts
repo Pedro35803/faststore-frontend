@@ -1,17 +1,10 @@
-"use server"; 
+"use server";
 
-import { cookies } from "next/headers";
 import { api, updateToken } from "@/api";
-import { redirect } from "next/navigation";
+import { getCookieAuth } from "./cookiesServer";
 
 export const apiGet = async <T>(url: string): Promise<T> => {
-  const cookieStore = cookies(); // já é síncrono
-  const token = cookieStore.get("nextauth.token")?.value;
-
-  if (!token) {
-    redirect("/");
-  }
-
+  const token = getCookieAuth();
   updateToken(token);
 
   const response = await api.get<T>(url);

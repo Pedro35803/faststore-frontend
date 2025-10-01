@@ -41,13 +41,18 @@ export default function HomePage() {
           </Link>
           {type === "CLIENT" && (
             <>
-              <Link href="/cart/me" className="btn btn-warning">
+              <Link href="/cart" className="btn btn-warning">
                 Ver Carrinho
               </Link>
-              <Link href="/favorites/me" className="btn btn-warning">
+              <Link href="/favorites" className="btn btn-warning">
                 Ver Favoritos
               </Link>
             </>
+          )}
+          {type === "SELLER" && (
+            <Link href="/dashboard" className="btn btn-warning">
+              Ver Carrinho
+            </Link>
           )}
         </div>
       </section>

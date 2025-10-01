@@ -1,13 +1,17 @@
-import { useResource } from "@/common/useResource";
+import { apiGet } from "@/services/serverGetReqApi";
 import { CardProduct } from "../products/_components/CardProduct";
 import { Product } from "@/types/product";
 
 export default async function FavoritePage() {
-  const stores = await useResource<Product[]>(`/favorites/me`);
+  const stores = await apiGet<Product[]>(`/favorite/me`);
   return (
     <>
       <h2 className="title text-left">Produtos Favoritados</h2>
-      <div className="grid-common">{stores?.map(CardProduct)}</div>
+      <div className="grid-common">
+        {stores?.map((item) => (
+          <CardProduct key={item.id} isFavorite={true} {...item} quantity={1} />
+        ))}
+      </div>
     </>
   );
 }
