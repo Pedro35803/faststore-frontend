@@ -2,6 +2,8 @@ import { apiGet } from "@/services/serverGetReqApi";
 import { CardOrder } from "./_components/CardOrder";
 import { Order } from "@/types/order";
 
+export const revalidate = 30
+
 export default async function HistoricPage() {
   const orders = await apiGet<Order[]>(`/history/me`);
   return (

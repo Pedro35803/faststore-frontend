@@ -11,6 +11,8 @@ type DashboardData = {
 const styleCard =
   "bg-base-200 rounded-lg p-4 shadow-sm flex flex-col items-center justify-center";
 
+export const revalidate = 60
+
 export default async function Dashboard() {
   const data = await apiGet<DashboardData>("/dashboard");
 

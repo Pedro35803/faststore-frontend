@@ -2,6 +2,8 @@ import { apiGet } from "@/services/serverGetReqApi";
 import { CardProduct } from "../products/_components/CardProduct";
 import { Product } from "@/types/product";
 
+export const revalidate = 10
+
 export default async function FavoritePage() {
   const stores = await apiGet<Product[]>(`/favorite/me`);
   return (

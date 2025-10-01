@@ -15,6 +15,8 @@ type Response = {
   cart: Cart[];
 };
 
+export const revalidate = 10;
+
 export default async function CartPage() {
   const carts = await apiGet<Response>("/cart/me");
 
