@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import Swal from "sweetalert2";
+
 import { api } from "@/api";
 import { useAuth } from "@/common/authContext";
 import { coinPtBr } from "@/services/coin";
 import { Product } from "@/types/product";
-import { useState } from "react";
 
-export const CardProduct = (product: Product) => {
+type Props = { quantity: number } & Product;
+
+export const CardProduct = ({ quantity, ...product }: Props) => {
   const { isLogged, user } = useAuth();
 
   const [isCart, setIsCart] = useState(false);
@@ -20,6 +24,42 @@ export const CardProduct = (product: Product) => {
     } finally {
       setIsCart(!isCart);
     }
+  };
+
+  const openModalBuy = ({ id, name, price }: Product) => {
+    Swal.fire({
+      title: "Comprar",
+      text: "",
+      html: `
+        <div class="flex flex-col items-center w-full gap-2">
+          <p class="text-2xl font-bold">Deseja realizar a compra deste produto?<p>
+          <div class="flex justify-between gap-4 max-w-xs">
+            <p class="text-xl text-secondary">${name}</p>
+            <p class="text-xl text-secondary">${coinPtBr(price)}</p>
+          </div>
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Comprar",
+      cancelButtonText: "Cancelar",
+      icon: "info",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Processando compra...",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        try {
+          await api.post("/orders", { id_product: id });
+          Swal.fire("Produto comprado com sucesso!", "", "success");
+        } catch (error) {
+          Swal.fire("Erro ao comprar o produto!", "", "error");
+        }
+      }
+    });
   };
 
   return (
@@ -39,7 +79,11 @@ export const CardProduct = (product: Product) => {
         <p className="mb-4">{product.description}</p>
         {user?.role === "CLIENT" && (
           <div className="card-actions">
-            <button className="btn btn-primary" disabled={!isLogged}>
+            <button
+              className="btn btn-primary"
+              onClick={() => openModalBuy(product)}
+              disabled={!isLogged}
+            >
               Compre Agora
             </button>
             <button

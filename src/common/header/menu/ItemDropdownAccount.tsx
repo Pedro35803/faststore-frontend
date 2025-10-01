@@ -7,6 +7,7 @@ import {
   MdManageAccounts,
   MdSettings,
 } from "react-icons/md";
+import { TbLogout } from "react-icons/tb";
 
 const trlRole = {
   SELLER: "Vendedor",
@@ -14,7 +15,7 @@ const trlRole = {
 };
 
 export const HeaderAccount = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <div className="dropdown relative inline-flex [--auto-close:inside] [--offset:8] [--placement:bottom-end]">
       <button
@@ -97,10 +98,10 @@ export const HeaderAccount = () => {
           </li>
         )}
         <li className="dropdown-footer gap-2">
-          <a className="btn btn-error btn-soft btn-block" href="/logout">
-            <span className="icon-[tabler--logout]"></span>
+          <button className="btn btn-error btn-soft btn-block" onClick={logout}>
+            <TbLogout className="size-5" />
             Sair
-          </a>
+          </button>
         </li>
       </ul>
     </div>

@@ -8,7 +8,7 @@ export const coinFormat = (
   const formatted = new Intl.NumberFormat(format, {
     style: "currency",
     currency,
-  }).format(Math.abs(value / 100));
+  }).format(Math.abs(value));
   return value < 0 ? formatted.replace(/^(\D+\s)/, "$1-") : formatted;
 };
 

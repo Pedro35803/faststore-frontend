@@ -19,8 +19,10 @@ const createObjFile = (url: string = "") => {
 };
 
 export default function AccountPage() {
-  const { user } = useAuth();
+  const { user, isLogged } = useAuth();
   const router = useRouter();
+
+  if (!isLogged) return router.push("/login");
 
   const submit = async (fields: AccountFormValues) => {
     try {
