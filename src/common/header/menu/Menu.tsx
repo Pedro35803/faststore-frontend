@@ -22,7 +22,9 @@ export const Menu = () => {
           <ul className="menu md:menu-horizontal gap-2 p-0 text-base max-md:mt-2">
             <ItemLink name="Home" link="/" />
 
-            {type == "SELLER" && <ItemLink name="Dashboard" link="/dashboard" />}
+            {type == "SELLER" && (
+              <ItemLink name="Dashboard" link="/dashboard" />
+            )}
             {type == "CLIENT" && <ItemLink name="Carrinho" link="/cart" />}
             {type == "CLIENT" && (
               <ItemLink name="Favoritos" link="/favorites" />

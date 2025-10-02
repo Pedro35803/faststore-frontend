@@ -2,6 +2,7 @@ import { apiGet } from "@/services/serverGetReqApi";
 import { CardProduct } from "../products/_components/CardProduct";
 import { Product } from "@/types/product";
 import { BuyButton } from "./_components/ButtonBuyAll";
+import { EmptyPage } from "@/common/EmptyPage";
 
 type Cart = {
   product: Product;
@@ -19,7 +20,7 @@ export const revalidate = 10;
 
 export default async function CartPage() {
   const carts = await apiGet<Response>("/cart/me");
-
+  if (carts.cart.length === 0) return <EmptyPage />;
   return (
     <>
       <div className="flex justify-between items-center gap-2">

@@ -6,6 +6,7 @@ import { User } from "../types/user";
 import { ChildrenProps, LoginProps } from "@/types/common";
 import { LoadingPage } from "./LoadingPage";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
+import { useRouter } from "next/navigation";
 
 type AuthContext = {
   user?: User;
@@ -25,7 +26,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const login = async ({ email, password }: LoginProps): Promise<User> => {
+  const login = async ({ email, password }: LoginProps): Promise<void> => {
     const res = await api.post("/login", { email, password });
     if (res.status !== 201) throw { message: res.data, status: res.status };
 
@@ -35,7 +36,6 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     updateToken(token);
 
     setUser(user);
-    return user;
   };
 
   const getUser = async () => {

@@ -5,18 +5,14 @@ import { ButtonRequest } from "@/common/ButtonRequest";
 import { DivField } from "@/common/DivField";
 import { HeaderReturn } from "@/common/header/HeaderReturn";
 import { loginSchema } from "@/scheme/auth";
-import { LoginProps } from "@/types/common";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, isLogged } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (values: LoginProps) => {
-    await login(values as LoginProps);
-    router.push("/products");
-  };
+  if (isLogged) router.replace("/");
 
   return (
     <div className="flex flex-col min-h-screen justify-center items-center">
@@ -29,7 +25,10 @@ export default function LoginPage() {
             <Formik
               initialValues={{ email: "", password: "" }}
               validationSchema={loginSchema}
-              onSubmit={handleSubmit}
+              onSubmit={async (values) => {
+                await login(values);
+                window.location.reload();
+              }}
             >
               {() => (
                 <Form className="flex flex-col gap-4">

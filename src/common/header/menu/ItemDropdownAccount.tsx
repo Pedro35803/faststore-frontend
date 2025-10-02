@@ -75,12 +75,6 @@ export const HeaderAccount = () => {
             Meu Perfil
           </a>
         </li>
-        <li>
-          <a className="dropdown-item" href="/settings">
-            <MdSettings size={24} />
-            Configurações
-          </a>
-        </li>
         {user?.role === "CLIENT" && (
           <li>
             <a className="dropdown-item" href="/historic">

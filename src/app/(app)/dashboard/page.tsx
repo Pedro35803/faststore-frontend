@@ -11,7 +11,7 @@ type DashboardData = {
 const styleCard =
   "bg-base-200 rounded-lg p-4 shadow-sm flex flex-col items-center justify-center";
 
-export const revalidate = 60
+export const revalidate = 60;
 
 export default async function Dashboard() {
   const data = await apiGet<DashboardData>("/dashboard");
@@ -53,7 +53,7 @@ export default async function Dashboard() {
 
         <div className={styleCard}>
           <p className="text-sm text-base-content/70">Produto Mais Vendido</p>
-          <p className="text-xl font-semibold text-base-content text-center">
+          <p className="text-xl font-semibold text-base-content text-center text-ellipsis overflow-hidden">
             {data.bestSellingProduct}
           </p>
         </div>

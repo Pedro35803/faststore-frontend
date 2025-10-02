@@ -6,22 +6,25 @@ import { ButtonRequest } from "@/common/ButtonRequest";
 import { DivField } from "@/common/DivField";
 import { HeaderReturn } from "@/common/header/HeaderReturn";
 import { Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
 import { SelectRole } from "./_components/SelectRole";
 import { registerSchema } from "@/scheme/auth";
 import { LoginProps } from "@/types/common";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
-  const { login } = useAuth();
+  const { login, isLogged } = useAuth();
   const router = useRouter();
+
+  if (isLogged) router.replace("/");
 
   const handleSubmit = async (values: LoginProps) => {
     const register = await api.post("/register", values);
     if (register.status === 201) {
       await login(values);
-      router.push("/products");
+      window.location.reload();
     }
   };
+
   return (
     <div className="flex flex-col min-h-screen justify-center items-center">
       <div className="max-w-sm w-full">

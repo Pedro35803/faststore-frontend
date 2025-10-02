@@ -8,11 +8,11 @@ export const DropdownProduct = () => {
   const { type, user } = useAuth();
   if (type != "SELLER") return <ItemLink name="Produtos" link="/products" />;
   return (
-    <li className="dropdown relative inline-flex [--auto-close:inside] [--offset:9] [--placement:bottom-end]">
+    <li className="dropdown relative inline-flex">
       <button
-        id="dropdown-nav"
+        id="dropdown-default"
         type="button"
-        className="dropdown-toggle dropdown-open:bg-base-content/10 dropdown-open:text-base-content"
+        className="dropdown-toggle"
         aria-haspopup="menu"
         aria-expanded="false"
         aria-label="Dropdown"
