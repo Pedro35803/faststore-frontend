@@ -10,7 +10,6 @@ import { api } from "@/api";
 import { ButtonRequest } from "@/common/ButtonRequest";
 import { ImgPerfil } from "./_components/ImgPerfil";
 import { useRouter } from "next/navigation";
-import { Client, User } from "@/types/user";
 
 const createObjFile = (url: string = "") => {
   const filename = url.split("/").pop() as string;
@@ -56,11 +55,11 @@ export default function AccountPage() {
           validationSchema={user?.role === "CLIENT" ? userSchema : sellerSchema}
           onSubmit={submit}
         >
-          {({ errors }) => (
+          {() => (
             <Form className="flex flex-col flex-1 items-center gap-4 w-full max-w-2xl">
               <ImgPerfil />
               {user?.role === "CLIENT" && (
-                <LevelAccount level={(user as Client)?.accountLevel} />
+                <LevelAccount level={user?.client?.level_account} />
               )}
               <div className="flex gap-4 w-full">
                 <div className="w-full">

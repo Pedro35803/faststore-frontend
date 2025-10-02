@@ -5,7 +5,7 @@ import React from "react";
 import { MdEmojiEvents } from "react-icons/md"; // ícone de medalha
 
 interface LevelAccountProps {
-  level: Client["accountLevel"];
+  level: Client["level_account"];
 }
 
 const trlLabel = {

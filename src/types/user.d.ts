@@ -17,6 +17,7 @@ export interface User extends CommonInResponse {
   status: UserStatus;
   picture: string;
   seller?: Seller;
+  client?: Client;
 }
 
 // Tipos auxiliares
@@ -25,8 +26,8 @@ export interface CartItem extends CommonInResponse {
   quantity: number;
 }
 
-export interface Client extends User {
-  accountLevel: "initial" | "silver" | "gold";
+export interface Client extends CommonInResponse {
+  level_account: "initial" | "silver" | "gold";
   favorites?: string[];
   cart?: CartItem[];
   purchaseHistory?: Purchase[];
