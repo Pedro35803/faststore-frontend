@@ -85,6 +85,14 @@ export const HeaderAccount = () => {
         )}
         {user?.role === "SELLER" && (
           <li>
+            <a className="dropdown-item" href={`/store/${user.id}`}>
+              <MdHistory size={24} />
+              Minha Loja
+            </a>
+          </li>
+        )}
+        {user?.role === "SELLER" && (
+          <li>
             <a className="dropdown-item" href="/dashboard">
               <MdHistory size={24} />
               Dashboard

@@ -2,7 +2,7 @@ import { FaBoxOpen } from "react-icons/fa";
 import React from "react";
 
 interface EmptyPageProps {
-  message?: string;
+  message?: string | React.ReactElement;
 }
 
 export const EmptyPage: React.FC<EmptyPageProps> = ({
