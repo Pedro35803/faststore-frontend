@@ -4,6 +4,7 @@ import "./globals.css";
 
 import FlyonuiScript from "@/common/FlyonuiScript";
 import { AuthContextProvider } from "@/common/authContext";
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,8 +21,10 @@ export const metadata: Metadata = {
   description: "Uma loja fictícia para compra e venda de items",
 };
 
-const rootStyle: React.CSSProperties = {
-  "--vsc-domain": "localhost" as unknown as string,
+type CSSVars = { [key: `--${string}`]: string | number };
+
+const rootStyle: React.CSSProperties & CSSVars = {
+  "--vsc-domain": "localhost",
 };
 
 export default function RootLayout({
