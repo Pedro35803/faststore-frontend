@@ -20,16 +20,17 @@ export const metadata: Metadata = {
   description: "Uma loja fictícia para compra e venda de items",
 };
 
+const rootStyle: React.CSSProperties = {
+  "--vsc-domain": "localhost" as unknown as string,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      style={{ "--vsc-domain": "localhost" } as React.CSSProperties}
-    >
+    <html lang="en" style={rootStyle}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

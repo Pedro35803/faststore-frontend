@@ -10,6 +10,8 @@ import { api } from "@/api";
 import { ButtonRequest } from "@/common/ButtonRequest";
 import { ImgPerfil } from "./_components/ImgPerfil";
 import { useRouter } from "next/navigation";
+import { AccountStatus } from "./_components/AccountStatus";
+import { StoreStatus } from "./_components/StoreStatus";
 
 const createObjFile = (url: string = "") => {
   const filename = url.split("/").pop() as string;
@@ -18,8 +20,10 @@ const createObjFile = (url: string = "") => {
   return file;
 };
 
+const pageReload = () => window.location.reload();
+
 export default function AccountPage() {
-  const { user, isLogged } = useAuth();
+  const { user, isLogged, logout } = useAuth();
   const router = useRouter();
 
   if (!isLogged) return router.push("/login");
@@ -58,9 +62,18 @@ export default function AccountPage() {
           {() => (
             <Form className="flex flex-col flex-1 items-center gap-4 w-full max-w-2xl">
               <ImgPerfil />
-              {user?.role === "CLIENT" && (
-                <LevelAccount level={user?.client?.level_account} />
-              )}
+              <div className="flex justify-between gap-3 w-full">
+                {user?.role === "CLIENT" && (
+                  <LevelAccount level={user?.client?.level_account} />
+                )}
+
+                <AccountStatus accountStatus={user.status} />
+
+                {user?.role === "SELLER" && !!user.seller && (
+                  <StoreStatus storeActive={user.seller.store_active} />
+                )}
+              </div>
+
               <div className="flex gap-4 w-full">
                 <div className="w-full">
                   <DivField label="Email" name="email" type="email" disabled />
@@ -74,7 +87,51 @@ export default function AccountPage() {
                   </div>
                 )}
               </div>
-              <ButtonRequest>Salvar</ButtonRequest>
+              <div className="flex justify-between gap-2 w-full items-center *:w-1/2">
+                <ButtonRequest>Salvar</ButtonRequest>
+
+                {user.role === "SELLER" ? (
+                  user?.seller.store_active ? (
+                    <button
+                      type="button"
+                      className="btn btn-error mt-2"
+                      onClick={async () => {
+                        await api.patch("/seller/inactive");
+                        pageReload();
+                      }}
+                    >
+                      Desativar Loja
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-success mt-2"
+                      onClick={async () => {
+                        await api.patch("/seller/active");
+                        pageReload();
+                      }}
+                    >
+                      Ativar Loja
+                    </button>
+                  )
+                ) : (
+                  <></>
+                )}
+
+                {user.role === "CLIENT" && user.status !== "DELETED" && (
+                  <button
+                    type="button"
+                    className="btn btn-error mt-2"
+                    onClick={async () => {
+                      await api.delete("/client");
+                      logout();
+                      pageReload();
+                    }}
+                  >
+                    Excluir conta
+                  </button>
+                )}
+              </div>
             </Form>
           )}
         </Formik>

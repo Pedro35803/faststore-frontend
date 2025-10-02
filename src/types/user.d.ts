@@ -7,7 +7,7 @@ export type CommonInResponse = {
   updated_at: string;
 };
 
-type UserStatus = "ACTIVE" | "INCOMPLETE" | "SUSPENDED" | "DELETED";
+export type UserStatus = "ACTIVE" | "INCOMPLETE" | "SUSPENDED" | "DELETED";
 
 export interface User extends CommonInResponse {
   id: string;
