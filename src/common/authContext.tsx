@@ -14,7 +14,7 @@ type AuthContext = {
   isLogged: boolean;
   isLoading: boolean;
   logout: () => Promise<void>;
-  login: (props: LoginProps) => Promise<User>;
+  login: (props: LoginProps) => Promise<void>;
 };
 
 const authContext = createContext({} as AuthContext);
